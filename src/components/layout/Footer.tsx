@@ -1,15 +1,38 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { EVENT_META, NAV_LINKS } from '../../data/content';
 
 export const Footer: React.FC = () => {
+  const footerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: footerRef,
+    offset: ['start end', 'end end'],
+  });
+
+  // Dynamic scroll-controlled sequence for footer elements
+  const identityY = useTransform(scrollYProgress, [0, 1], [40, 0]);
+  const identityOpacity = useTransform(scrollYProgress, [0, 0.8], [0.3, 1]);
+
+  const linksY = useTransform(scrollYProgress, [0, 1], [40, 0]);
+  const linksOpacity = useTransform(scrollYProgress, [0, 0.8], [0.3, 1]);
+
+  const coordsY = useTransform(scrollYProgress, [0, 1], [60, 0]);
+  const coordsOpacity = useTransform(scrollYProgress, [0, 0.8], [0.3, 1]);
+
   return (
-    <footer className="bg-[#050505] text-white pt-24 pb-16 border-t border-white/[0.08]">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-16">
-        {/* Top Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12">
+    <footer
+      ref={footerRef}
+      className="bg-[#050505] text-white pt-16 sm:pt-24 pb-12 sm:pb-16 border-t border-white/[0.08] overflow-hidden"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 space-y-12 sm:space-y-16">
+        {/* Top Grid with scroll control */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12">
           {/* Col 1: Identity & Compliance */}
-          <div className="lg:col-span-5 space-y-6">
+          <motion.div
+            style={{ y: identityY, opacity: identityOpacity }}
+            className="lg:col-span-5 space-y-4 sm:space-y-6"
+          >
             <div className="flex items-baseline gap-1">
               <span className="font-display font-black text-3xl text-[#E62B1E]">TEDx</span>
               <span className="font-display font-bold text-3xl text-white">RVITM</span>
@@ -24,10 +47,13 @@ export const Footer: React.FC = () => {
               <span className="text-[#E62B1E] font-medium block">TEDx Compliance Notice</span>
               <p>{EVENT_META.licenseLine}</p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Col 2: Navigation Links */}
-          <div className="lg:col-span-3 space-y-4 font-mono text-xs">
+          <motion.div
+            style={{ y: linksY, opacity: linksOpacity }}
+            className="lg:col-span-3 space-y-4 font-mono text-xs"
+          >
             <h4 className="font-semibold text-white tracking-widest uppercase">
               Navigation
             </h4>
@@ -42,10 +68,13 @@ export const Footer: React.FC = () => {
                 </Link>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Col 3: Coordinates */}
-          <div className="lg:col-span-4 space-y-4 font-mono text-xs">
+          <motion.div
+            style={{ y: coordsY, opacity: coordsOpacity }}
+            className="lg:col-span-4 space-y-4 font-mono text-xs"
+          >
             <h4 className="font-semibold text-white tracking-widest uppercase">
               Location
             </h4>
@@ -62,7 +91,7 @@ export const Footer: React.FC = () => {
               <a href="https://youtube.com" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">YouTube ↗</a>
               <a href="https://x.com" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">X / Twitter ↗</a>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Bottom Legal Bar */}

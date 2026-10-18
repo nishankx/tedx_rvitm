@@ -10,18 +10,11 @@ export const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const hasSeenLoader = sessionStorage.getItem('tedxrvitm_seen_intro');
-    if (hasSeenLoader) {
-      if (onComplete) onComplete();
-      return;
-    }
-
     setIsVisible(true);
     const timer = setTimeout(() => {
       setIsVisible(false);
-      sessionStorage.setItem('tedxrvitm_seen_intro', 'true');
       if (onComplete) onComplete();
-    }, 1200);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, [onComplete]);

@@ -1,19 +1,57 @@
-import React from 'react';
-import { MARQUEE_PHRASES } from '../data/content';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { TextLoop } from '../components/ui/TextLoop';
 
 export const MarqueeTapeSection: React.FC = () => {
-  const tapeText = [...MARQUEE_PHRASES, ...MARQUEE_PHRASES];
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+
+  // Dynamic scroll-controlled sequence: horizontal scrub, dynamic tilt rotation, and subtle scale
+  const tapeRotate = useTransform(scrollYProgress, [0, 0.5, 1], [-2, 0, 2]);
+  const tapeScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.96, 1.02, 0.96]);
+  const tapeOpacity = useTransform(scrollYProgress, [0, 0.25, 0.8, 1], [0.6, 1, 1, 0.6]);
 
   return (
-    <section className="relative py-8 bg-[#0C0C0C] border-y border-white/[0.08] overflow-hidden select-none">
-      <div className="flex items-center overflow-hidden whitespace-nowrap animate-marquee">
-        {tapeText.map((phrase, idx) => (
-          <div key={idx} className="inline-flex items-center gap-8 mx-6 font-mono text-xs uppercase tracking-[0.25em] text-white/50">
-            <span>{phrase}</span>
-            <span className="text-[#E62B1E] text-sm">✦</span>
-          </div>
-        ))}
+    <motion.section
+      ref={sectionRef}
+      style={{
+        rotate: tapeRotate,
+        scale: tapeScale,
+        opacity: tapeOpacity,
+      }}
+      className="relative py-8 md:py-12 bg-[#080808] border-y border-white/[0.08] overflow-hidden select-none"
+    >
+      <div className="w-full">
+        <TextLoop
+          text="RESONANCE ✦ IDEAS WORTH SPREADING ✦ TEDxRVITM 2026 ✦ DISRUPT THE SILENCE"
+          shape="wave"
+          speed={85}
+          direction="forward"
+          separator="✦"
+          curviness={55}
+          tilt={-1.5}
+          fontSize={42}
+          fontWeight={800}
+          letterSpacing={2}
+          uppercase
+          ribbon
+          ribbonColor="#E62B1E"
+          ribbonWidth={78}
+          cross={true}
+          crossColor="#141414"
+          crossAngle={12}
+          draggable={true}
+          scrollBoost={1.6}
+          edgeFade={0.12}
+          pauseOnHover
+        />
       </div>
-    </section>
+      <div className="text-center mt-2 text-[10px] font-mono tracking-widest text-white/30 uppercase px-4">
+        DRAG TAPE TO FLING • SCROLL TO ACCELERATE
+      </div>
+    </motion.section>
   );
 };

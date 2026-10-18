@@ -11,15 +11,15 @@ export const SponsorsSection: React.FC = () => {
   };
 
   return (
-    <section id="partner" className="relative bg-[#080808] text-white py-32 px-6 md:px-12 border-b border-white/[0.08]">
-      <div className="max-w-7xl mx-auto space-y-16">
+    <section id="partner" className="relative bg-[#080808] text-white py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 border-b border-white/[0.08] overflow-hidden">
+      <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.08] pb-8">
-          <div className="space-y-3">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.08] pb-6 sm:pb-8">
+          <div className="space-y-2 sm:space-y-3">
             <span className="font-mono text-xs text-[#E62B1E] tracking-widest uppercase block">
               09 / ALLIANCES
             </span>
-            <h2 className="font-display font-bold text-3xl sm:text-5xl tracking-tight text-white">
+            <h2 className="font-display font-bold text-2xl sm:text-4xl md:text-5xl tracking-tight text-white">
               Partners & Patrons
             </h2>
           </div>
@@ -29,8 +29,8 @@ export const SponsorsSection: React.FC = () => {
         </div>
 
         {/* Clean Logo Carousel */}
-        <div className="py-8 border-y border-white/[0.06] overflow-hidden">
-          <div className="flex items-center gap-12 overflow-hidden whitespace-nowrap animate-marquee">
+        <div className="py-6 sm:py-8 border-y border-white/[0.06] overflow-hidden">
+          <div className="flex items-center gap-8 sm:gap-12 overflow-hidden whitespace-nowrap animate-marquee">
             {[...SPONSORS, ...SPONSORS].map((s, idx) => (
               <div
                 key={idx}
@@ -48,7 +48,7 @@ export const SponsorsSection: React.FC = () => {
         </div>
 
         {/* Partnership Proposal Block */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 p-8 sm:p-12 rounded-2xl bg-[#111111] border border-white/[0.08]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 p-6 sm:p-8 md:p-12 rounded-2xl bg-[#111111] border border-white/[0.08]">
           <div className="lg:col-span-5 space-y-6">
             <span className="text-[10px] font-mono tracking-widest text-[#E62B1E] uppercase block">
               Corporate & Institutional Patronage

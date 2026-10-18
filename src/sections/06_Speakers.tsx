@@ -1,232 +1,142 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { SPEAKERS, EVENT_META } from '../data/content';
 import type { Speaker } from '../types';
-import { OptionWheel } from '../components/ui/OptionWheel';
-import { FlexCarousel } from '../components/ui/FlexCarousel';
-import { CircularCarousel, type CircularItem } from '../components/ui/CircularCarousel';
+import { FlexCarousel, type FlexCarouselItem } from '../components/ui/FlexCarousel';
 import { SpecularButton } from '../components/ui/SpecularButton';
 
-const viewOptions = [
-  { id: 'flex', label: 'Featured Flow' },
-  { id: '3d', label: '3D Circular' },
-  { id: 'grid', label: 'Grid Matrix' },
-  { id: 'list', label: 'Dossier List' },
-];
-
 export const SpeakersSection: React.FC = () => {
-  const [viewMode, setViewMode] = useState<string>('flex');
-  const [activeAccordionId, setActiveAccordionId] = useState<string | null>(SPEAKERS[0].id);
   const [selectedSpeaker, setSelectedSpeaker] = useState<Speaker | null>(null);
 
-  // Map speakers for ReactBits FlexCarousel
-  const flexItems = SPEAKERS.slice(0, 5).map((s) => ({
-    id: s.id,
+  // Map speakers for ReactBits FlexCarousel (WebGl Liquid Lens)
+  const flexItems: FlexCarouselItem[] = SPEAKERS.map((s) => ({
+    src: s.image,
+    alt: `${s.name} - ${s.role}`,
     title: s.name,
-    subtitle: `${s.role} • ${s.company}`,
-    description: `"${s.talkTitle}"`,
-    image: s.image,
-    badge: s.category,
-    onClick: () => setSelectedSpeaker(s),
+    subtitle: `${s.role} • ${s.company} — "${s.talkTitle}"`,
   }));
 
-  // Map speakers for ReactBits CircularCarousel
-  const circularItems: CircularItem[] = SPEAKERS.map((s) => ({
-    id: s.id,
-    title: s.name,
-    category: s.category,
-    image: s.image,
-  }));
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
 
-  const handleCircularSelect = (item: CircularItem) => {
-    const sp = SPEAKERS.find((s) => s.id === item.id);
-    if (sp) setSelectedSpeaker(sp);
-  };
+  // Dynamic scroll-controlled sequence: header translation, revolving accent
+  const headerY = useTransform(scrollYProgress, [0, 1], [50, -30]);
+  const headerOpacity = useTransform(scrollYProgress, [0, 0.2, 0.85, 1], [0.4, 1, 1, 0.4]);
+  const revolveRotate = useTransform(scrollYProgress, [0, 1], [0, 360]);
 
   return (
-    <section id="speakers" className="relative bg-[#080808] text-white py-32 px-6 md:px-12 border-b border-white/[0.08]">
-      <div className="max-w-7xl mx-auto space-y-12">
-        {/* Header with ReactBits OptionWheel */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-white/[0.08] pb-8">
-          <div className="space-y-3">
-            <span className="font-mono text-xs text-[#E62B1E] tracking-widest uppercase block">
-              03 / VOICES
-            </span>
-            <h2 className="font-display font-bold text-3xl sm:text-5xl tracking-tight text-white">
+    <section
+      id="speakers"
+      ref={sectionRef}
+      className="relative bg-[#080808] text-white py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 border-b border-white/[0.08] overflow-hidden select-none"
+    >
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#E62B1E]/[0.05] rounded-full blur-[160px] pointer-events-none -z-0" />
+
+      <div className="max-w-7xl mx-auto space-y-8 sm:space-y-10 relative z-10">
+        {/* Header: Seamlessly part of the site architecture */}
+        <motion.div
+          style={{ y: headerY, opacity: headerOpacity }}
+          className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-white/[0.08] pb-6 sm:pb-8"
+        >
+          <div className="space-y-2 sm:space-y-3">
+            <div className="flex items-center gap-3">
+              <span className="font-mono text-xs text-[#E62B1E] tracking-widest uppercase block">
+                03 / VOICES
+              </span>
+              <motion.span
+                style={{ rotate: revolveRotate }}
+                className="inline-block text-[#E62B1E] text-xs font-mono"
+              >
+                ✦
+              </motion.span>
+              <span className="font-mono text-[11px] text-white/40 tracking-wider">
+                COHORT 2026
+              </span>
+            </div>
+            <h2 className="font-display font-bold text-2xl sm:text-5xl lg:text-6xl tracking-tight text-white">
               {EVENT_META.speakerCount}+ Confirmed Keynotes
             </h2>
-            <p className="font-mono text-xs text-white/50 max-w-lg">
-              Explore revolutionary perspectives via dynamic carousel, 3D turntable, or comprehensive dossiers.
+            <p className="font-mono text-xs sm:text-sm text-white/50 max-w-xl">
+              Visionaries, technologists, and pioneers bending perceptions through revolutionary talks.
             </p>
           </div>
 
-          {/* ReactBits OptionWheel for View Switching */}
-          <OptionWheel
-            options={viewOptions}
-            selectedId={viewMode}
-            onSelect={(id) => setViewMode(id)}
+          <div className="flex items-center gap-4 text-xs font-mono text-white/40">
+            <span className="text-[#E62B1E] flex items-center gap-1.5 font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#E62B1E] animate-pulse" />
+              LIQUID LENS FIELD
+            </span>
+            <span>•</span>
+            <span>DRAG / FLING TO BROWSE</span>
+          </div>
+        </motion.div>
+
+        {/* Large, Seamless React Bits FlexCarousel Stage */}
+        <div className="relative w-full h-[460px] sm:h-[620px] lg:h-[820px] rounded-2xl overflow-hidden bg-black/20">
+          <FlexCarousel
+            items={flexItems}
+            preset="liquid"
+            intro="none"
+            cardHeight={0.62}
+            gap={18}
+            radius={18}
+            squeeze={0.22}
+            focusOnClick={true}
+            captions={true}
+            captureWheel={false}
+            onSelect={(index) => {
+              if (SPEAKERS[index]) {
+                setSelectedSpeaker(SPEAKERS[index]);
+              }
+            }}
           />
         </div>
 
-        {/* VIEW 1: REACTBITS FLEX CAROUSEL */}
-        {viewMode === 'flex' && (
-          <div className="space-y-6">
-            <div className="flex items-center justify-between text-xs font-mono text-white/40">
-              <span>HOVER / CLICK CARD TO EXPAND TALK SUMMARY</span>
-              <span>01 - 05 OF {SPEAKERS.length}</span>
-            </div>
-            <FlexCarousel items={flexItems} />
+        {/* Seamless Navigation Info Bar */}
+        <div className="flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-white/40 pt-4 border-t border-white/[0.08] gap-4">
+          <div className="flex items-center gap-3">
+            <span className="text-white/60">← DRAG / ARROW KEYS / TOUCH →</span>
+            <span>•</span>
+            <span>CLICK FOCUSED CARD FOR TALK DOSSIER</span>
           </div>
-        )}
-
-        {/* VIEW 2: REACTBITS CIRCULAR 3D CAROUSEL */}
-        {viewMode === '3d' && (
-          <div className="space-y-4">
-            <div className="text-center font-mono text-xs text-white/40">
-              CLICK ADJACENT CARDS OR ARROWS TO ROTATE • CLICK CENTER FOR DOSSIER
-            </div>
-            <CircularCarousel items={circularItems} onItemClick={handleCircularSelect} />
+          <div className="text-right text-[#E62B1E] tracking-wider uppercase">
+            {SPEAKERS.length} CONFIRMED KEYNOTE SPEAKERS
           </div>
-        )}
-
-        {/* VIEW 3: GRID MATRIX */}
-        {viewMode === 'grid' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {SPEAKERS.map((speaker) => (
-              <div
-                key={speaker.id}
-                onClick={() => setSelectedSpeaker(speaker)}
-                className="group p-6 rounded-2xl bg-[#111111] border border-white/[0.08] hover:border-white/20 transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-6"
-              >
-                <div className="space-y-6">
-                  {/* Portrait photo */}
-                  <div className="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-[#181818]">
-                    <img
-                      src={speaker.image}
-                      alt={speaker.name}
-                      loading="lazy"
-                      className="w-full h-full object-cover filter grayscale contrast-110 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
-                    />
-                    <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-mono text-white/80 border border-white/10">
-                      {speaker.category}
-                    </div>
-                  </div>
-
-                  {/* Speaker Info */}
-                  <div className="space-y-2">
-                    <h3 className="font-display font-bold text-xl text-white group-hover:text-[#E62B1E] transition-colors">
-                      {speaker.name}
-                    </h3>
-                    <p className="font-mono text-xs text-white/50">
-                      {speaker.role} • {speaker.company}
-                    </p>
-                  </div>
-
-                  <p className="font-body text-xs text-white/70 line-clamp-2 leading-relaxed font-light">
-                    "{speaker.talkTitle}"
-                  </p>
-                </div>
-
-                <div className="pt-4 border-t border-white/[0.08] flex items-center justify-between text-xs font-mono text-white/40 group-hover:text-white transition-colors">
-                  <span>VIEW DOSSIER</span>
-                  <span>↗</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* VIEW 4: LIST ACCORDION VIEW */}
-        {viewMode === 'list' && (
-          <div className="space-y-4">
-            {SPEAKERS.map((speaker, index) => {
-              const isOpen = activeAccordionId === speaker.id;
-              return (
-                <div
-                  key={speaker.id}
-                  className="rounded-xl border border-white/[0.08] bg-[#111111] overflow-hidden transition-all"
-                >
-                  <button
-                    onClick={() => setActiveAccordionId(isOpen ? null : speaker.id)}
-                    className="w-full p-6 text-left flex items-center justify-between gap-6 hover:bg-white/[0.02] transition-colors"
-                  >
-                    <div className="flex items-baseline gap-6">
-                      <span className="font-mono text-xs text-white/30">0{index + 1}</span>
-                      <div>
-                        <h3 className="font-display font-bold text-lg sm:text-xl text-white">
-                          {speaker.name}
-                        </h3>
-                        <span className="font-mono text-xs text-white/50">{speaker.role}</span>
-                      </div>
-                    </div>
-                    <span className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-xs font-mono text-white/60">
-                      {isOpen ? '−' : '+'}
-                    </span>
-                  </button>
-
-                  <AnimatePresence>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        className="p-6 pt-0 border-t border-white/[0.08] grid grid-cols-1 md:grid-cols-12 gap-8 items-center"
-                      >
-                        <div className="md:col-span-4 aspect-video rounded-lg overflow-hidden">
-                          <img src={speaker.image} alt={speaker.name} className="w-full h-full object-cover" />
-                        </div>
-                        <div className="md:col-span-8 space-y-4">
-                          <p className="font-display font-medium text-lg text-white">
-                            "{speaker.talkTitle}"
-                          </p>
-                          <p className="font-body text-xs text-white/70 leading-relaxed font-light">
-                            {speaker.fullBio}
-                          </p>
-                          <SpecularButton
-                            onClick={() => setSelectedSpeaker(speaker)}
-                            variant="outline"
-                          >
-                            Full Talk Dossier ↗
-                          </SpecularButton>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            })}
-          </div>
-        )}
+        </div>
       </div>
 
       {/* Speaker Dossier Modal */}
       <AnimatePresence>
         {selectedSpeaker && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/85 backdrop-blur-md">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-md">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="relative w-full max-w-3xl rounded-2xl bg-[#141414] border border-white/20 p-8 sm:p-12 text-white max-h-[90vh] overflow-y-auto space-y-8"
+              className="relative w-full max-w-3xl rounded-2xl bg-[#141414] border border-white/20 p-5 sm:p-8 md:p-12 text-white max-h-[90vh] overflow-y-auto space-y-6 sm:space-y-8"
             >
               <button
                 onClick={() => setSelectedSpeaker(null)}
-                className="absolute top-6 right-6 w-8 h-8 rounded-full border border-white/20 text-white/70 hover:text-white flex items-center justify-center text-sm"
+                className="absolute top-4 sm:top-6 right-4 sm:right-6 w-8 h-8 rounded-full border border-white/20 text-white/70 hover:text-white flex items-center justify-center text-sm cursor-pointer"
               >
                 ✕
               </button>
 
-              <div className="flex flex-col sm:flex-row gap-6 items-start">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
                 <img
                   src={selectedSpeaker.image}
                   alt={selectedSpeaker.name}
-                  className="w-24 h-24 sm:w-32 sm:h-32 rounded-xl object-cover shrink-0"
+                  className="w-20 h-20 sm:w-32 sm:h-32 rounded-xl object-cover shrink-0"
                 />
                 <div className="space-y-1">
                   <span className="text-[10px] font-mono tracking-widest text-[#E62B1E] uppercase">
                     {selectedSpeaker.category}
                   </span>
-                  <h3 className="font-display font-bold text-2xl sm:text-3xl text-white">
+                  <h3 className="font-display font-bold text-xl sm:text-3xl text-white">
                     {selectedSpeaker.name}
                   </h3>
                   <p className="font-mono text-xs text-white/60">
@@ -235,22 +145,22 @@ export const SpeakersSection: React.FC = () => {
                 </div>
               </div>
 
-              <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10 space-y-1">
+              <div className="p-3 sm:p-4 rounded-xl bg-white/[0.04] border border-white/10 space-y-1">
                 <span className="font-mono text-[10px] text-white/40 uppercase block">KEYNOTE TITLE</span>
-                <p className="font-display font-medium text-lg text-white">
+                <p className="font-display font-medium text-base sm:text-lg text-white">
                   "{selectedSpeaker.talkTitle}"
                 </p>
               </div>
 
-              <p className="font-body text-sm text-white/80 leading-relaxed font-light">
+              <p className="font-body text-xs sm:text-sm text-white/80 leading-relaxed font-light">
                 {selectedSpeaker.fullBio}
               </p>
 
-              <div className="flex gap-4 pt-4 border-t border-white/10">
-                <SpecularButton href="/passes" variant="primary">
-                  Reserve Pass to See Talk ↗
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4 border-t border-white/10">
+                <SpecularButton href="#schedule" variant="primary" className="w-full sm:w-auto">
+                  Explore Full Lineup ↗
                 </SpecularButton>
-                <SpecularButton onClick={() => setSelectedSpeaker(null)} variant="outline">
+                <SpecularButton onClick={() => setSelectedSpeaker(null)} variant="outline" className="w-full sm:w-auto">
                   Close
                 </SpecularButton>
               </div>

@@ -1,11 +1,25 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { AGENDA_SESSIONS } from '../data/content';
-import { OptionWheel } from '../components/ui/OptionWheel';
+import { PillTabBar } from '../components/ui/PillTabBar';
 
 export const ScheduleSection: React.FC = () => {
   const [activeSessionId, setActiveSessionId] = useState(AGENDA_SESSIONS[0].sessionId);
   const currentSession = AGENDA_SESSIONS.find((s) => s.sessionId === activeSessionId) || AGENDA_SESSIONS[0];
+
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+
+  // Dynamic scroll-controlled sequence: header vertical motion and container dynamic elevation & scale
+  const headerY = useTransform(scrollYProgress, [0, 1], [40, -20]);
+  const headerOpacity = useTransform(scrollYProgress, [0, 0.25, 0.8, 1], [0.35, 1, 1, 0.4]);
+
+  const containerY = useTransform(scrollYProgress, [0, 1], [60, -35]);
+  const containerRotate = useTransform(scrollYProgress, [0, 1], [-1, 1]);
+  const containerScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1.01, 0.97]);
 
   const sessionOptions = AGENDA_SESSIONS.map((s, idx) => ({
     id: s.sessionId,
@@ -14,28 +28,42 @@ export const ScheduleSection: React.FC = () => {
   }));
 
   return (
-    <section id="schedule" className="relative bg-[#080808] text-white py-32 px-6 md:px-12 border-b border-white/[0.08]">
-      <div className="max-w-7xl mx-auto space-y-16">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.08] pb-8">
-          <div className="space-y-3">
+    <section
+      id="schedule"
+      ref={sectionRef}
+      className="relative bg-[#080808] text-white py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 border-b border-white/[0.08] overflow-hidden"
+    >
+      <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16">
+        {/* Header with scroll control */}
+        <motion.div
+          style={{ y: headerY, opacity: headerOpacity }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.08] pb-6 sm:pb-8"
+        >
+          <div className="space-y-2 sm:space-y-3">
             <span className="font-mono text-xs text-[#E62B1E] tracking-widest uppercase block">
               04 / RUN OF SHOW
             </span>
-            <h2 className="font-display font-bold text-3xl sm:text-5xl tracking-tight text-white">
+            <h2 className="font-display font-bold text-2xl sm:text-5xl tracking-tight text-white">
               Schedule & Tracks
             </h2>
           </div>
           <p className="font-mono text-xs text-white/50 max-w-sm">
             Three unbroken intellectual tracks structured without standard corporate interruptions.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Clean Executive Agenda Container */}
-        <div className="rounded-2xl bg-[#111111] border border-white/[0.08] p-8 sm:p-12 space-y-8">
-          {/* ReactBits OptionWheel for Session Tracks */}
+        {/* Clean Executive Agenda Container with scroll-controlled elevation */}
+        <motion.div
+          style={{
+            y: containerY,
+            rotate: containerRotate,
+            scale: containerScale,
+          }}
+          className="rounded-2xl bg-[#111111] border border-white/[0.08] p-5 sm:p-8 md:p-12 space-y-6 sm:space-y-8"
+        >
+          {/* Session Tracks Pill Selector */}
           <div className="pb-6 border-b border-white/[0.08]">
-            <OptionWheel
+            <PillTabBar
               options={sessionOptions}
               selectedId={activeSessionId}
               onSelect={(id) => setActiveSessionId(id)}
@@ -91,7 +119,7 @@ export const ScheduleSection: React.FC = () => {
               ))}
             </motion.div>
           </AnimatePresence>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

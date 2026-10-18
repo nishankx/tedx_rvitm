@@ -23,10 +23,8 @@ export const Navbar: React.FC = () => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-          isScrolled
-            ? 'bg-[#080808]/85 backdrop-blur-xl border-b border-white/[0.08] py-4'
-            : 'bg-transparent py-6'
+        className={`fixed top-0 left-0 w-full z-50 bg-[#080808] border-b border-white/[0.08] transition-all duration-300 ${
+          isScrolled ? 'py-4 shadow-2xl shadow-black/80' : 'py-5'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
@@ -64,15 +62,8 @@ export const Navbar: React.FC = () => {
             })}
           </nav>
 
-          {/* Right Action: Clean CTA Pill & Mobile Toggle */}
+          {/* Right Action: Mobile Toggle */}
           <div className="flex items-center gap-4">
-            <Link
-              to="/passes"
-              className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full text-xs font-mono font-medium tracking-wider uppercase bg-[#E62B1E] text-white hover:bg-[#FF3324] shadow-[0_4px_20px_rgba(230,43,30,0.25)] transition-all"
-            >
-              Get Passes
-            </Link>
-
             {/* Mobile Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -122,16 +113,6 @@ export const Navbar: React.FC = () => {
                   {link.name}
                 </Link>
               ))}
-
-              <div className="pt-4">
-                <Link
-                  to="/passes"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="inline-flex w-full items-center justify-center py-3.5 rounded-full bg-[#E62B1E] text-white font-mono text-sm tracking-wider font-semibold shadow-glow-red"
-                >
-                  GET PASSES
-                </Link>
-              </div>
             </div>
 
             <div className="border-t border-white/10 pt-6 text-xs font-mono text-white/40 space-y-1">

@@ -4,15 +4,15 @@ import { BrutalButton } from '../components/ui/BrutalButton';
 
 export const PastSpeakersSection: React.FC = () => {
   return (
-    <section id="past-speakers" className="relative bg-[#080808] text-white py-32 px-6 md:px-12 border-b border-white/[0.08]">
-      <div className="max-w-7xl mx-auto space-y-16">
+    <section id="past-speakers" className="relative bg-[#080808] text-white py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 border-b border-white/[0.08] overflow-hidden">
+      <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.08] pb-8">
-          <div className="space-y-3">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.08] pb-6 sm:pb-8">
+          <div className="space-y-2 sm:space-y-3">
             <span className="font-mono text-xs text-[#E62B1E] tracking-widest uppercase block">
               08 / ARCHIVE
             </span>
-            <h2 className="font-display font-bold text-3xl sm:text-5xl tracking-tight text-white">
+            <h2 className="font-display font-bold text-2xl sm:text-4xl md:text-5xl tracking-tight text-white">
               Past Editions
             </h2>
           </div>
@@ -27,7 +27,7 @@ export const PastSpeakersSection: React.FC = () => {
         </div>
 
         {/* Clean Photo Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {PAST_SPEAKERS.map((spk) => (
             <div
               key={spk.id}

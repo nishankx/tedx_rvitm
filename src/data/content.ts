@@ -3,7 +3,7 @@ import type { Speaker, AgendaSession, TicketTier, EventCard, WhyAttendCard, Test
 export const EVENT_META = {
   name: 'TEDxRVITM',
   tagline: 'IDEAS WORTH SPREADING',
-  theme: 'UNRAVEL : THE UNCHARTED',
+  theme: 'RESONANCE',
   themePlaceholder: '{{THEME}}',
   date: 'NOVEMBER 14, 2026',
   datePlaceholder: '{{DATE}}',
@@ -98,6 +98,28 @@ export const UPCOMING_EVENTS: EventCard[] = [
     status: 'CALL FOR ENTRIES',
     badge: 'IDEA SEARCH',
     link: '/speakers#nominate'
+  },
+  {
+    id: 'salon-synthetic',
+    title: 'SYNTHETIC MINDS : NEURAL FRONTIERS',
+    type: 'COGNITIVE AI ROUNDTABLE',
+    date: 'SATURDAY, AUG 15, 2026',
+    venue: 'RVITM Media Center',
+    description: 'Exploring bio-silicon interfaces, cryptographic cognition, and artificial consciousness with leading neuro-technologists.',
+    status: 'COMING SOON',
+    badge: 'SYMPOSIUM',
+    link: '/passes'
+  },
+  {
+    id: 'workshop-biophilic',
+    title: 'LIVING ARCHITECTURE : DESIGN LAB',
+    type: 'EXPERIMENTAL BIOMATERIALS WORKSHOP',
+    date: 'THURSDAY, JUL 02, 2026',
+    venue: 'RVITM Design Studio',
+    description: 'Hands-on living architecture laboratory prototyping self-healing mycelium structures and microbial urban retrofits.',
+    status: 'COMING SOON',
+    badge: 'WORKSHOP',
+    link: '/passes'
   }
 ];
 
@@ -698,10 +720,8 @@ export const FAQ_ITEMS: FAQItem[] = [
 export const NAV_LINKS = [
   { name: 'Speakers', href: '#speakers', path: '/speakers' },
   { name: 'Schedule', href: '#schedule', path: '/#schedule' },
-  { name: 'Passes', href: '#passes', path: '/passes' },
   { name: 'About', href: '#about', path: '/about' },
   { name: 'Venue', href: '#venue', path: '/#venue' },
-  { name: 'Partner', href: '#partner', path: '/partner' },
   { name: 'Team', href: '#team', path: '/team' },
   { name: 'FAQ', href: '#faq', path: '/faq' },
 ];

@@ -1,15 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { VENUE_DETAILS } from '../data/content';
 import { BrutalButton } from '../components/ui/BrutalButton';
 
 export const VenueSection: React.FC = () => {
   const [currentImgIdx, setCurrentImgIdx] = useState(0);
 
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+
+  // Dynamic scroll-controlled sequence: header scrub and complementary photo/map parallax
+  const headerY = useTransform(scrollYProgress, [0, 1], [50, -30]);
+  const headerOpacity = useTransform(scrollYProgress, [0, 0.25, 0.8, 1], [0.35, 1, 1, 0.4]);
+
+  const photosY = useTransform(scrollYProgress, [0, 1], [70, -40]);
+  const photosScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.93, 1.03, 0.95]);
+  const photosRotate = useTransform(scrollYProgress, [0, 1], [-1.5, 1.5]);
+
+  const mapY = useTransform(scrollYProgress, [0, 1], [90, -50]);
+  const mapRotate = useTransform(scrollYProgress, [0, 1], [1.5, -1.5]);
+
   return (
-    <section id="venue" className="relative bg-[#080808] text-white py-32 px-6 md:px-12 border-b border-white/[0.08]">
+    <section
+      id="venue"
+      ref={sectionRef}
+      className="relative bg-[#080808] text-white py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 border-b border-white/[0.08]"
+    >
       <div className="max-w-7xl mx-auto space-y-16">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.08] pb-8">
+        {/* Header with scroll control */}
+        <motion.div
+          style={{ y: headerY, opacity: headerOpacity }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.08] pb-8"
+        >
           <div className="space-y-3">
             <span className="font-mono text-xs text-[#E62B1E] tracking-widest uppercase block">
               10 / VENUE
@@ -26,12 +51,19 @@ export const VenueSection: React.FC = () => {
           >
             Open in Google Maps ↗
           </BrutalButton>
-        </div>
+        </motion.div>
 
-        {/* Clean Layout */}
+        {/* Clean Layout with scroll-controlled elevation */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          {/* Photos */}
-          <div className="lg:col-span-7 rounded-2xl bg-[#111111] border border-white/[0.08] p-6 sm:p-8 flex flex-col justify-between space-y-6">
+          {/* Photos with scroll motion */}
+          <motion.div
+            style={{
+              y: photosY,
+              scale: photosScale,
+              rotate: photosRotate,
+            }}
+            className="lg:col-span-7 rounded-2xl bg-[#111111] border border-white/[0.08] p-6 sm:p-8 flex flex-col justify-between space-y-6"
+          >
             <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-black">
               <img
                 src={VENUE_DETAILS.images[currentImgIdx]}
@@ -65,10 +97,16 @@ export const VenueSection: React.FC = () => {
                 <p className="text-white/70">{VENUE_DETAILS.parking}</p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Details & Map */}
-          <div className="lg:col-span-5 flex flex-col justify-between gap-8">
+          {/* Details & Map with scroll motion */}
+          <motion.div
+            style={{
+              y: mapY,
+              rotate: mapRotate,
+            }}
+            className="lg:col-span-5 flex flex-col justify-between gap-8"
+          >
             <div className="p-8 rounded-2xl bg-[#111111] border border-white/[0.08] space-y-4">
               <span className="text-[10px] font-mono tracking-widest text-[#E62B1E] uppercase">
                 BENGALURU HEADQUARTERS
@@ -92,9 +130,11 @@ export const VenueSection: React.FC = () => {
                 loading="lazy"
               />
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
   );
 };
+
+export default VenueSection;

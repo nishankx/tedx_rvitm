@@ -74,8 +74,8 @@ const fitScale = (w: number, h: number, iw: number, ih: number, contain: boolean
 };
 
 const wanderAt = (t: number, w: number, h: number): [number, number] => [
-  w * (0.5 + 0.33 * Math.sin(t * 0.53) + 0.08 * Math.sin(t * 1.31 + 0.6)),
-  h * (0.5 + 0.28 * Math.sin(t * 0.71 + 1.1) + 0.07 * Math.cos(t * 1.57))
+  w * (0.5 + 0.36 * Math.sin(t * 1.6) + 0.1 * Math.sin(t * 3.6 + 0.6)),
+  h * (0.5 + 0.3 * Math.sin(t * 2.1 + 1.1) + 0.08 * Math.cos(t * 4.2))
 ];
 
 const measureEdge = (context: CanvasRenderingContext2D, image: HTMLImageElement): { matte: Rgb; plain: boolean } => {
@@ -382,12 +382,18 @@ void main() {
     level = quantize(toned(c), t);
   }
 
-  vec3 color = mix(uInk, mix(uInk, uPaper, level), max(framed, uKey));
-  vec3 backdrop = mix(uInk, uPaper, toned(uMatte));
   vec2 photoUv = imageUv(vUv);
   vec3 raw = texture(tImage, photoUv).rgb;
-  float plain = uKey * (1.0 - smoothstep(0.05, 0.22, distance(raw, uMatte)));
-  vec3 photo = mix(mix(uInk, backdrop, uKey), mix(raw, backdrop, plain), within(photoUv));
+  vec3 rawCell = textureLod(tImage, sampleUv, uLod).rgb;
+
+  // Key out the matte / studio background so only the sculpture subject is visible
+  float plainCell = uKey * (1.0 - smoothstep(0.04, 0.18, distance(rawCell, uMatte)));
+  float plain = uKey * (1.0 - smoothstep(0.04, 0.18, distance(raw, uMatte)));
+
+  vec3 color = mix(uInk, mix(uInk, uPaper, level), framed);
+  color = mix(color, uInk, plainCell);
+
+  vec3 photo = mix(mix(raw, uInk, plain), uInk, 1.0 - within(photoUv));
 
   vec2 point = vec2(cellUv.x, 1.0 - cellUv.y) * uSize;
   float mask = max(clamp(texture(tMask, cellUv).r * uHold, 0.0, 1.0), shockwave(point));
@@ -532,8 +538,8 @@ export const DitherVeil = ({
       uReverse: { value: 0 },
       uIntro: { value: 0 },
       uHold: { value: HOLD },
-      uMatte: { value: [0, 0, 0] },
-      uKey: { value: 0 },
+      uMatte: { value: [0.82, 0.82, 0.82] },
+      uKey: { value: 1 },
       uSize: { value: [1, 1] },
       uBursts: { value: Array.from({ length: MAX_BURSTS * 4 }, () => 0) },
       uBurstWidth: { value: 60 }
@@ -649,23 +655,27 @@ export const DitherVeil = ({
       let targetX = pointer.x;
       let targetY = pointer.y;
       if (!pointer.inside && wanderOn) {
-        drift = Math.min(1, drift + dt / 1.2);
-        const [wx, wy] = wanderAt(now / 1000, width, height);
+        drift = Math.min(1, drift + dt / 0.3);
+        const [wx, wy] = wanderAt((now / 1000) * 1.6, width, height);
         const k = drift * drift * (3 - 2 * drift);
         targetX += (wx - targetX) * k;
         targetY += (wy - targetY) * k;
+      } else if (wanderOn && !pointer.placed) {
+        const [wx, wy] = wanderAt((now / 1000) * 1.6, width, height);
+        targetX = wx;
+        targetY = wy;
       } else {
         drift = 0;
       }
 
-      presence += ((pointer.inside || wanderOn ? 1 : 0) - presence) * (1 - Math.exp(-dt / 0.16));
+      presence += ((pointer.inside || wanderOn ? 1 : 0) - presence) * (1 - Math.exp(-dt / 0.12));
 
       if (pointer.fresh) {
         brush.x = brush.px = targetX;
         brush.y = brush.py = targetY;
         pointer.fresh = false;
       } else {
-        const follow = 1 - Math.exp(-dt / 0.035);
+        const follow = 1 - Math.exp(-dt / 0.02);
         brush.x += (targetX - brush.x) * follow;
         brush.y += (targetY - brush.y) * follow;
       }
@@ -771,9 +781,12 @@ export const DitherVeil = ({
         if (samplerContext) {
           const edge = measureEdge(samplerContext, img);
           viewUniforms.uMatte.value = edge.matte;
-          viewUniforms.uKey.value = edge.plain ? 1 : 0;
+          viewUniforms.uKey.value = 1;
         }
-      } catch {}
+      } catch {
+        viewUniforms.uMatte.value = [0.82, 0.82, 0.82];
+        viewUniforms.uKey.value = 1;
+      }
       introStart = performance.now();
       wake();
     };
