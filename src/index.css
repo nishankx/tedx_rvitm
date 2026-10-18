@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-ted-red: #E62B1E;
+    --color-bg-dark: #080808;
+    --color-bg-card: #121212;
+  }
+
+  html {
+    background-color: #080808;
+    color: #FFFFFF;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  /* Sleek modern focus ring */
+  *:focus-visible {
+    outline: 2px solid #E62B1E !important;
+    outline-offset: 2px !important;
+  }
+
+  /* Minimalist dark scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #080808;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #262626;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #E62B1E;
+  }
+}
+
+/* Glassmorphism & clean card styles */
+.glass-panel {
+  background: rgba(18, 18, 18, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-panel-hover:hover {
+  background: rgba(26, 26, 26, 0.85);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+}
+
+/* Red ambient glow utilities */
+.glow-red-sm {
+  box-shadow: 0 0 25px -5px rgba(230, 43, 30, 0.25);
+}
+
+.glow-red-lg {
+  box-shadow: 0 0 60px -10px rgba(230, 43, 30, 0.35);
+}
+
+/* Subtle hairline borders */
+.border-subtle {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* High-performance infinite marquees */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marqueeReverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+.animate-marquee-reverse {
+  display: flex;
+  width: max-content;
+  animation: marqueeReverse 35s linear infinite;
+}
+
+@keyframes aurora {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.18) translate(4%, 3%); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+.animate-aurora {
+  animation: aurora 22s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
