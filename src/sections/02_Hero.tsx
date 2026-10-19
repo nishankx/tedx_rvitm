@@ -101,12 +101,12 @@ export const HeroSection: React.FC = () => {
 
           {/* Refined Scaled-Down Monumental Title */}
           <div className="space-y-1.5">
-            <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight uppercase leading-[0.92] text-white drop-shadow-[0_10px_25px_rgba(0,0,0,0.9)]">
-              RESONANCE
+            <h1 className="font-sugiyama text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-white tracking-normal drop-shadow-[0_10px_25px_rgba(0,0,0,0.9)] leading-[1.1] py-1 select-none">
+              Maya
             </h1>
             {/* Smaller, Refined Resonance Tagline */}
-            <p className="font-body text-xs sm:text-sm md:text-base text-white/70 font-normal leading-relaxed max-w-md pt-1">
-              where unspoken frequencies awaken bold transformations.
+            <p className="font-body text-xs sm:text-sm md:text-base text-white/70 font-normal leading-relaxed max-w-md pt-3">
+              Where the unseen shapes the seen
             </p>
           </div>
 

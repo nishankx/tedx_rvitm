@@ -28,6 +28,7 @@ export default {
         body: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
         mono: ['"Space Mono"', 'monospace'],
         cursive: ['"Caveat"', 'cursive'],
+        sugiyama: ['"Dr Sugiyama"', 'cursive'],
       },
       boxShadow: {
         'glow-red': '0 0 40px -10px rgba(230, 43, 30, 0.3)',
