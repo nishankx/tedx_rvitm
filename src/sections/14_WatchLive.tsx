@@ -21,23 +21,53 @@ export const WatchLiveSection: React.FC = () => {
   const videoRotate = useTransform(scrollYProgress, [0, 1], [-1, 1]);
   const radarRotate = useTransform(scrollYProgress, [0, 1], [0, 360]);
 
+  // Sideways watermarks movement
+  const watermarkX1 = useTransform(scrollYProgress, [0, 1], [-140, 140]);
+  const watermarkX2 = useTransform(scrollYProgress, [0, 1], [140, -140]);
+
   return (
     <section
       id="watch"
       ref={sectionRef}
-      className="relative bg-[#080808] text-white py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 border-b border-white/[0.08] overflow-hidden"
+      className="relative bg-[#080808] text-white py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 overflow-hidden select-none"
     >
-      <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16">
-        {/* Header with scroll control */}
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[450px] bg-[#E62B1E]/[0.04] rounded-full blur-[170px] pointer-events-none -z-0" />
+
+      {/* ── BACKGROUND TYPOGRAPHY (MONUMENTAL WATERMARKS WITH SIDEWAYS MOTION) ── */}
+      <motion.div
+        style={{ x: watermarkX1 }}
+        className="absolute top-4 -left-10 select-none pointer-events-none z-0 overflow-hidden leading-none opacity-[0.03]"
+      >
+        <span className="font-display font-black text-[15vw] tracking-tighter text-white uppercase whitespace-nowrap block">
+          BROADCAST
+        </span>
+      </motion.div>
+
+      <motion.div
+        style={{ x: watermarkX2 }}
+        className="absolute -bottom-8 -right-8 select-none pointer-events-none z-0 overflow-hidden leading-none opacity-[0.025]"
+      >
+        <span className="font-display font-black text-[13vw] tracking-tighter text-white uppercase whitespace-nowrap block">
+          TRANSMIT
+        </span>
+      </motion.div>
+
+      <div className="max-w-7xl mx-auto space-y-12 sm:space-y-16 relative z-10">
+        {/* Header with scroll control and fade-in */}
         <motion.div
           style={{ y: headerY, opacity: headerOpacity }}
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/[0.08] pb-6 sm:pb-8"
         >
           <div className="space-y-2 sm:space-y-3">
-            <span className="font-mono text-xs text-[#E62B1E] tracking-widest uppercase block">
+            <span className="font-subtext text-xs text-[#E62B1E] tracking-widest uppercase block">
               11 / BROADCAST
             </span>
-            <h2 className="font-display font-bold text-2xl sm:text-4xl md:text-5xl tracking-tight text-white">
+            <h2 className="font-heading font-black text-2xl sm:text-4xl md:text-5xl tracking-tight text-white uppercase">
               Watch Keynote Talks
             </h2>
           </div>
@@ -51,13 +81,17 @@ export const WatchLiveSection: React.FC = () => {
           </BrutalButton>
         </motion.div>
 
-        {/* Cinematic Video Showcase with scroll-controlled elevation & revolving accent */}
+        {/* Cinematic Video Showcase with scroll-controlled elevation, scale, and fade-in */}
         <motion.div
           style={{
             y: videoY,
             scale: videoScale,
             rotate: videoRotate,
           }}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden border border-white/[0.08] bg-black group"
         >
           <img
@@ -86,14 +120,14 @@ export const WatchLiveSection: React.FC = () => {
           {/* Bottom Title Bar */}
           <div className="absolute bottom-3 sm:bottom-6 left-3 sm:left-6 right-3 sm:right-6 p-3 sm:p-5 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 flex flex-col md:flex-row md:items-end justify-between gap-2 sm:gap-4">
             <div className="space-y-0.5 sm:space-y-1">
-              <span className="text-[9px] sm:text-[10px] font-mono tracking-widest text-[#E62B1E] uppercase">
+              <span className="text-[9px] sm:text-[10px] font-subtext tracking-widest text-[#E62B1E] uppercase">
                 {WATCH_TALKS_FEATURED.speaker}
               </span>
-              <h3 className="font-display font-medium text-sm sm:text-lg md:text-xl text-white line-clamp-1 sm:line-clamp-none">
+              <h3 className="font-subheading font-bold text-sm sm:text-lg md:text-xl text-white line-clamp-1 sm:line-clamp-none">
                 "{WATCH_TALKS_FEATURED.title}"
               </h3>
             </div>
-            <span className="font-mono text-[10px] sm:text-xs text-white/50 shrink-0">
+            <span className="font-subtext text-[10px] sm:text-xs text-white/50 shrink-0">
               {WATCH_TALKS_FEATURED.duration}
             </span>
           </div>

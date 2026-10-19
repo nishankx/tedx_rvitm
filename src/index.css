@@ -9,6 +9,10 @@
     --color-bg-card: #121212;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   html,
   body {
     background-color: #080808;
@@ -17,6 +21,10 @@
     overflow-x: clip;
     max-width: 100%;
     -webkit-text-size-adjust: 100%;
+  }
+
+  section[id] {
+    scroll-margin-top: 88px;
   }
 
   /* Sleek modern focus ring */
@@ -68,9 +76,61 @@
   box-shadow: 0 0 60px -10px rgba(230, 43, 30, 0.35);
 }
 
+/* Frosted highlight glow spotlight for monumental typography (craftwork inspiration) */
+.frosted-text-glow {
+  position: relative;
+}
+.frosted-text-glow::before {
+  content: '';
+  position: absolute;
+  inset: -20% -10%;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.3) 45%, transparent 75%);
+  filter: blur(28px);
+  z-index: -1;
+  border-radius: 9999px;
+  pointer-events: none;
+}
+
+/* Red signal glow spotlight */
+.frosted-red-glow::before {
+  content: '';
+  position: absolute;
+  inset: -20% -10%;
+  background: radial-gradient(ellipse at center, rgba(230, 43, 30, 0.85) 0%, rgba(230, 43, 30, 0.25) 50%, transparent 75%);
+  filter: blur(32px);
+  z-index: -1;
+  border-radius: 9999px;
+  pointer-events: none;
+}
+
 /* Subtle hairline borders */
 .border-subtle {
   border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Technical editorial crosshair mark */
+.crosshair-plus {
+  position: relative;
+}
+.crosshair-plus::before,
+.crosshair-plus::after {
+  content: '';
+  position: absolute;
+  background-color: #E62B1E;
+}
+.crosshair-plus::before {
+  width: 1px;
+  height: 12px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.crosshair-plus::after {
+  width: 12px;
+  height: 1px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* High-performance infinite marquees */
@@ -87,13 +147,31 @@
 .animate-marquee {
   display: flex;
   width: max-content;
-  animation: marquee 35s linear infinite;
+  animation: marquee 16s linear infinite;
 }
 
 .animate-marquee-reverse {
   display: flex;
   width: max-content;
-  animation: marqueeReverse 35s linear infinite;
+  animation: marqueeReverse 16s linear infinite;
+}
+
+.animate-marquee-fast {
+  display: flex;
+  width: max-content;
+  animation: marquee 11s linear infinite;
+}
+
+.animate-marquee-fast-reverse {
+  display: flex;
+  width: max-content;
+  animation: marqueeReverse 11s linear infinite;
+}
+
+.animate-marquee-slow {
+  display: flex;
+  width: max-content;
+  animation: marquee 26s linear infinite;
 }
 
 @keyframes aurora {

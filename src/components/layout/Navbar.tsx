@@ -6,6 +6,7 @@ import { NAV_LINKS } from '../../data/content';
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('');
   const location = useLocation();
 
   useEffect(() => {
@@ -20,6 +21,47 @@ export const Navbar: React.FC = () => {
     setMobileMenuOpen(false);
   }, [location]);
 
+  // ScrollSpy to track active homepage section
+  useEffect(() => {
+    const sectionIds = NAV_LINKS.map((link) => link.href.replace('#', ''));
+
+    const handleScrollSpy = () => {
+      if (location.pathname !== '/') {
+        setActiveSection('');
+        return;
+      }
+      const scrollPosition = window.scrollY + 140;
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sectionIds[i]);
+        if (el && el.offsetTop <= scrollPosition) {
+          setActiveSection(sectionIds[i]);
+          return;
+        }
+      }
+      if (window.scrollY < 200) {
+        setActiveSection('');
+      }
+    };
+
+    window.addEventListener('scroll', handleScrollSpy, { passive: true });
+    handleScrollSpy();
+    return () => window.removeEventListener('scroll', handleScrollSpy);
+  }, [location.pathname]);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    const targetId = href.replace('/#', '').replace('#', '');
+    if (location.pathname === '/') {
+      e.preventDefault();
+      const el = document.getElementById(targetId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+        window.history.pushState(null, '', `#${targetId}`);
+        setActiveSection(targetId);
+      }
+    }
+    setMobileMenuOpen(false);
+  };
+
   return (
     <>
       <header
@@ -28,9 +70,17 @@ export const Navbar: React.FC = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-          {/* Top-Left Brand Wordmark */}
+          {/* Top-Left Brand Wordmark (Strictly Preserved) */}
           <Link
             to="/"
+            onClick={(e) => {
+              if (location.pathname === '/') {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.history.pushState(null, '', '/');
+                setActiveSection('');
+              }
+            }}
             className="flex items-baseline gap-1 group select-none focus:outline-none"
             aria-label="TEDxRVITM Home"
           >
@@ -42,32 +92,37 @@ export const Navbar: React.FC = () => {
             </span>
           </Link>
 
-          {/* Desktop Links */}
-          <nav className="hidden lg:flex items-center gap-8">
-            {NAV_LINKS.map((link) => {
-              const isActive = location.pathname === link.path;
-              return (
-                <Link
-                  key={link.name}
-                  to={link.path}
-                  className={`text-xs font-mono uppercase tracking-widest transition-colors duration-200 ${
-                    isActive
-                      ? 'text-white font-bold'
-                      : 'text-white/60 hover:text-white'
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              );
-            })}
-          </nav>
+          {/* Right-Aligned Desktop Navigation & Mobile Toggle */}
+          <div className="flex items-center gap-6 sm:gap-8 ml-auto">
+            <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+              {NAV_LINKS.map((link) => {
+                const targetId = link.href.replace('#', '');
+                const isActive = activeSection === targetId;
 
-          {/* Right Action: Mobile Toggle */}
-          <div className="flex items-center gap-4">
+                return (
+                  <a
+                    key={link.name}
+                    href={location.pathname === '/' ? link.href : link.path}
+                    onClick={(e) => handleNavClick(e, link.href)}
+                    className={`text-xs font-subtext uppercase tracking-widest transition-all duration-200 relative py-1 cursor-pointer ${
+                      isActive
+                        ? 'text-[#E62B1E] font-bold'
+                        : 'text-white/60 hover:text-white'
+                    }`}
+                  >
+                    <span>{link.name}</span>
+                    {isActive && (
+                      <span className="absolute -bottom-1 left-0 right-0 h-[2px] bg-[#E62B1E] rounded-full" />
+                    )}
+                  </a>
+                );
+              })}
+            </nav>
+
             {/* Mobile Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 text-white/80 hover:text-white focus:outline-none"
+              className="lg:hidden p-2 text-white/80 hover:text-white focus:outline-none cursor-pointer"
               aria-label="Toggle menu"
             >
               <div className="w-6 flex flex-col items-end gap-1.5">
@@ -102,20 +157,27 @@ export const Navbar: React.FC = () => {
             transition={{ duration: 0.25, ease: 'easeInOut' }}
             className="fixed inset-0 z-40 bg-[#080808]/95 backdrop-blur-2xl flex flex-col justify-between p-8 pt-28 lg:hidden"
           >
-            <div className="space-y-6">
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.path}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block text-2xl font-display font-medium text-white/80 hover:text-white transition-colors"
-                >
-                  {link.name}
-                </Link>
-              ))}
+            <div className="space-y-5">
+              {NAV_LINKS.map((link) => {
+                const targetId = link.href.replace('#', '');
+                const isActive = activeSection === targetId;
+
+                return (
+                  <a
+                    key={link.name}
+                    href={location.pathname === '/' ? link.href : link.path}
+                    onClick={(e) => handleNavClick(e, link.href)}
+                    className={`block text-2xl font-subheading font-medium transition-colors cursor-pointer ${
+                      isActive ? 'text-[#E62B1E] font-bold' : 'text-white/80 hover:text-white'
+                    }`}
+                  >
+                    {link.name}
+                  </a>
+                );
+              })}
             </div>
 
-            <div className="border-t border-white/10 pt-6 text-xs font-mono text-white/40 space-y-1">
+            <div className="border-t border-white/10 pt-6 text-xs font-subtext text-white/40 space-y-1">
               <p>RV Institute of Technology and Management, Bengaluru</p>
               <p className="text-[#E62B1E]">Operated under license from TED.</p>
             </div>

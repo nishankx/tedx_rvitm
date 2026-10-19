@@ -18,8 +18,14 @@ export default {
         },
       },
       fontFamily: {
+        heading: ['Syne', 'system-ui', 'sans-serif'],
+        subheading: ['"Playfair Display"', 'Georgia', 'serif'],
+        editorial: ['"Instrument Serif"', 'Georgia', 'serif'],
+        subtext: ['"Space Mono"', 'monospace'],
+        text: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        // Legacy / Hero preserved aliases so Hero section and TEDxRVITM logo remain untouched
         display: ['Archivo', 'system-ui', 'sans-serif'],
-        body: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+        body: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
         mono: ['"Space Mono"', 'monospace'],
         cursive: ['"Caveat"', 'cursive'],
       },

@@ -28,7 +28,7 @@ export const MarqueeTapeSection: React.FC = () => {
         <TextLoop
           text="RESONANCE ✦ IDEAS WORTH SPREADING ✦ TEDxRVITM 2026 ✦ DISRUPT THE SILENCE"
           shape="wave"
-          speed={85}
+          speed={135}
           direction="forward"
           separator="✦"
           curviness={55}
@@ -44,13 +44,10 @@ export const MarqueeTapeSection: React.FC = () => {
           crossColor="#141414"
           crossAngle={12}
           draggable={true}
-          scrollBoost={1.6}
+          scrollBoost={2.0}
           edgeFade={0.12}
           pauseOnHover
         />
-      </div>
-      <div className="text-center mt-2 text-[10px] font-mono tracking-widest text-white/30 uppercase px-4">
-        DRAG TAPE TO FLING • SCROLL TO ACCELERATE
       </div>
     </motion.section>
   );

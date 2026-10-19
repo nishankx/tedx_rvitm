@@ -19,31 +19,51 @@ export const SpeakersPage: React.FC = () => {
   });
 
   return (
-    <div className="w-full bg-[#080808] text-white pt-32 pb-16">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-16">
-        {/* Header */}
-        <div className="border-b border-white/[0.08] pb-12 space-y-6">
-          <span className="font-mono text-xs text-[#E62B1E] tracking-widest uppercase block">
-            Speakers Roster
+    <main className="relative w-full bg-[#080808] text-white overflow-x-clip mt-[76px] sm:mt-[80px]">
+      {/* ── HERO BANNER SECTION ── */}
+      <section className="relative w-full pt-16 sm:pt-24 pb-12 sm:pb-16 px-4 sm:px-6 md:px-12 overflow-hidden border-b border-white/[0.08]">
+        {/* Background ambient lighting */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[450px] bg-[radial-gradient(ellipse_at_center,rgba(230,43,30,0.08),transparent_70%)] pointer-events-none" />
+
+        {/* Monumental Watermarks */}
+        <div className="absolute top-6 -left-8 select-none pointer-events-none z-0 overflow-hidden leading-none opacity-[0.04]">
+          <span className="font-display font-black text-[16vw] tracking-tighter text-white uppercase whitespace-nowrap block">
+            SPEAKERS
           </span>
-          <h1 className="font-display font-bold text-4xl sm:text-6xl tracking-tight text-white">
-            Confirmed Lineup
-          </h1>
-          <p className="font-body text-base text-white/60 max-w-xl font-light leading-relaxed">
-            Leading researchers, artists, and engineers challenging assumptions at TEDxRVITM 2026.
-          </p>
+        </div>
+        <div className="absolute bottom-2 -right-8 select-none pointer-events-none z-0 overflow-hidden leading-none opacity-[0.03]">
+          <span className="font-display font-black text-[14vw] tracking-tighter text-white uppercase whitespace-nowrap block">
+            ORATORS
+          </span>
+        </div>
+
+        <div className="max-w-7xl mx-auto space-y-6 relative z-10">
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#E62B1E] animate-pulse" />
+              <span className="font-subtext text-xs text-[#E62B1E] tracking-widest uppercase font-bold">
+                ✦ 2026 CONFIRMED ROSTER
+              </span>
+            </div>
+            <h1 className="font-heading font-black text-4xl sm:text-6xl lg:text-7xl tracking-tight uppercase text-white">
+              The Lineup
+            </h1>
+            <p className="font-text text-sm sm:text-base text-white/60 max-w-xl leading-relaxed font-light">
+              Leading researchers, disruptive artists, and frontier engineers challenging assumptions on the TEDxRVITM stage.
+            </p>
+          </div>
 
           {/* Filter Bar & Search */}
-          <div className="pt-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="pt-4 flex flex-col md:flex-row md:items-center justify-between gap-4 border-t border-white/[0.08]">
             <div className="flex flex-wrap gap-2">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setSelectedCat(cat)}
-                  className={`px-4 py-2 rounded-full font-mono text-xs transition-all ${
+                  className={`px-4 py-2 rounded-full font-subtext text-xs transition-all cursor-pointer ${
                     selectedCat === cat
-                      ? 'bg-white text-black font-semibold'
-                      : 'bg-white/[0.04] text-white/60 hover:text-white border border-white/[0.08]'
+                      ? 'bg-[#E62B1E] text-white font-bold shadow-md shadow-red-900/20'
+                      : 'bg-white/[0.04] text-white/60 hover:text-white border border-white/[0.08] hover:border-white/20'
                   }`}
                 >
                   {cat}
@@ -54,64 +74,80 @@ export const SpeakersPage: React.FC = () => {
             <div className="w-full md:w-64">
               <input
                 type="text"
-                placeholder="Search speakers..."
+                placeholder="Search speakers or talks..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full p-2.5 rounded-full bg-black/60 border border-white/15 text-white font-sans text-xs focus:border-[#E62B1E] focus:outline-none px-4"
+                className="w-full p-2.5 rounded-full bg-white/[0.04] border border-white/15 text-white font-subtext text-xs focus:border-[#E62B1E] focus:outline-none px-4 placeholder:text-white/30"
               />
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filtered.map((speaker) => (
-            <div
-              key={speaker.id}
-              className="p-6 rounded-2xl bg-[#111111] border border-white/[0.08] hover:border-white/20 transition-all duration-300 flex flex-col justify-between space-y-6"
-            >
-              <div className="space-y-6">
-                <div className="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-black">
+      {/* ── STADIUM CAPSULE SPEAKERS GRID ── */}
+      <section className="relative w-full py-16 sm:py-24 px-4 sm:px-6 md:px-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 sm:gap-12 lg:gap-14">
+            {filtered.map((speaker) => (
+              <Link
+                key={speaker.id}
+                to={`/speakers/${speaker.slug}`}
+                className="group flex flex-col items-center text-center select-none"
+              >
+                {/* Stadium / Capsule Shape Portrait */}
+                <div className="w-full max-w-[280px] sm:max-w-none aspect-[3/4] rounded-[65px] sm:rounded-[80px] overflow-hidden bg-neutral-900 border border-white/10 group-hover:border-[#E62B1E] transition-all duration-500 shadow-2xl relative">
                   <img
                     src={speaker.image}
                     alt={speaker.name}
-                    className="w-full h-full object-cover filter grayscale contrast-110 hover:grayscale-0 transition-all duration-500"
+                    className="w-full h-full object-cover filter contrast-105 group-hover:scale-105 transition-transform duration-700 pointer-events-none"
                   />
-                  <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-mono text-white/80 border border-white/10">
+                  {/* Subtle Category Pill Badge */}
+                  <div className="absolute top-4 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-black/75 backdrop-blur-md text-[10px] font-subtext text-white/90 border border-white/15 whitespace-nowrap">
                     {speaker.category}
+                  </div>
+                  {/* Subtle hover pill indicator */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-5">
+                    <span className="font-subtext text-xs text-white uppercase tracking-wider px-3.5 py-1.5 rounded-full bg-[#E62B1E] font-bold shadow-lg shadow-red-900/40">
+                      Read Dossier ↗
+                    </span>
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <h3 className="font-display font-bold text-xl text-white">
+                {/* Speaker Information Underneath */}
+                <div className="mt-5 space-y-2 px-2 text-center max-w-[280px]">
+                  <h3 className="font-subheading font-bold text-xl sm:text-2xl text-white group-hover:text-[#E62B1E] transition-colors tracking-tight leading-snug">
                     {speaker.name}
                   </h3>
-                  <p className="font-mono text-xs text-white/50">
-                    {speaker.role} • {speaker.company}
+                  <p className="font-subtext text-xs text-[#E62B1E] font-semibold tracking-wider uppercase">
+                    {speaker.company}
+                  </p>
+                  <p className="font-editorial italic text-base sm:text-lg text-neutral-300 leading-snug line-clamp-2">
+                    "{speaker.talkTitle}"
                   </p>
                 </div>
+              </Link>
+            ))}
+          </div>
 
-                <p className="font-body text-xs text-white/70 line-clamp-2 leading-relaxed font-light">
-                  "{speaker.talkTitle}"
-                </p>
-              </div>
-
-              <div className="pt-4 border-t border-white/[0.06]">
-                <Link
-                  to={`/speakers/${speaker.slug}`}
-                  className="inline-flex items-center gap-1 font-mono text-xs text-[#E62B1E] hover:underline"
-                >
-                  Read Speaker Dossier ↗
-                </Link>
-              </div>
+          {filtered.length === 0 && (
+            <div className="py-24 text-center space-y-3 font-subtext text-sm text-white/40">
+              <p>No speakers found matching your search criteria.</p>
+              <button
+                onClick={() => { setSelectedCat('ALL'); setSearchQuery(''); }}
+                className="text-[#E62B1E] underline hover:text-white cursor-pointer"
+              >
+                Reset search &amp; filters
+              </button>
             </div>
-          ))}
+          )}
         </div>
-      </div>
+      </section>
 
-      <div className="mt-24">
-        <Footer />
-      </div>
-    </div>
+      {/* ── FOOTER ── */}
+      <Footer />
+    </main>
   );
 };
+
+export default SpeakersPage;
+

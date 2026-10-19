@@ -24,7 +24,7 @@ export interface AgendaItem {
   title: string;
   speaker?: string;
   speakerSlug?: string;
-  type: 'Keynote' | 'Performance' | 'Fireside' | 'Networking' | 'Break' | 'Interactive';
+  type: 'Keynote' | 'Performance' | 'Fireside' | 'Networking' | 'Break' | 'Interactive' | string;
   location: string;
   description: string;
 }
@@ -54,6 +54,7 @@ export interface TicketTier {
 export interface EventCard {
   id: string;
   title: string;
+  shortName?: string;
   type: string;
   date: string;
   venue: string;
@@ -61,6 +62,8 @@ export interface EventCard {
   status: string;
   badge: string;
   link: string;
+  image?: string;
+  caption?: string;
 }
 
 export interface WhyAttendCard {

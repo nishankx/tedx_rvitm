@@ -13,7 +13,7 @@ export const EVENT_META = {
   licenseLine: 'This independent TEDx event is operated under license from TED.',
   speakerCountPlaceholder: '{{N}}',
   speakerCount: '16',
-  registrationStatus: 'REGISTRATIONS LIVE // LIMITED CAPACITY 500 PASSES',
+  registrationStatus: 'REGISTRATIONS LIVE • LIMITED CAPACITY 500 PASSES',
   ticketUrl: '/passes',
   nominateUrl: '/speakers#nominate',
   communityUrl: 'https://chat.whatsapp.com/TEDxRVITM-community',
@@ -62,64 +62,79 @@ export const ABOUT_CONTENT = {
     { target: 65, suffix: '+', label: 'STUDENT CREW BUILDERS' },
   ],
   quote: '"The illiterate of the 21st century will not be those who cannot read and write, but those who cannot learn, unlearn, and relearn."',
-  quoteAuthor: 'ALVIN TOFFLER // THEME INSPIRATION',
+  quoteAuthor: 'ALVIN TOFFLER',
 };
 
 export const UPCOMING_EVENTS: EventCard[] = [
   {
     id: 'main-conf',
     title: 'TEDxRVITM 2026: UNRAVEL',
+    shortName: 'UNRAVEL',
     type: 'ANNUAL FLAGSHIP CONFERENCE',
     date: 'SATURDAY, NOV 14, 2026',
     venue: 'RVITM Grand Auditorium, Bengaluru',
     description: '18 disruptive keynotes, live experimental musical interludes, interactive innovation lounge, curated lunch & delegate networking banquet.',
-    status: 'PASSES LIVE',
+    status: 'PLAN READY',
     badge: 'FLAGSHIP',
-    link: '/passes'
+    link: '#schedule',
+    image: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?q=80&w=1400&auto=format&fit=crop',
+    caption: '1,200 delegates gathering at RVITM Grand Auditorium for 18 transformative talks.',
   },
   {
     id: 'salon-quantum',
     title: 'TEDx SALON : THE QUANTUM LEAP',
+    shortName: 'Quantum Leap',
     type: 'INTIMATE 100-SEAT ROUNDTABLE',
     date: 'FRIDAY, OCT 09, 2026',
     venue: 'RVITM Innovation Lab 04',
     description: 'Hands-on symposium examining quantum computing, cryogenic semiconductors, and post-silicon cryptography with hardware architects.',
-    status: 'SELLING FAST',
+    status: 'PLAN READY',
     badge: 'SALON',
-    link: '/passes'
+    link: '#schedule',
+    image: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1400&auto=format&fit=crop',
+    caption: '100 researchers & founders deconstructing frontier quantum hardware architecture.',
   },
   {
     id: 'catalyst-pitch',
     title: 'CATALYST : STUDENT IDEA SEARCH',
+    shortName: 'Catalyst',
     type: 'OPEN MIC & PITCH SLAM',
     date: 'WEDNESDAY, SEP 23, 2026',
     venue: 'RVITM Amphitheatre',
     description: 'Undergraduate wildcards compete for a guaranteed speaking slot on the official red circle stage. 3 minutes. No slides. Raw vision.',
     status: 'CALL FOR ENTRIES',
     badge: 'IDEA SEARCH',
-    link: '/speakers#nominate'
+    link: '#schedule',
+    image: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=1400&auto=format&fit=crop',
+    caption: '3 minutes. No slides. Undergraduate wildcards pitching raw transformative ideas.',
   },
   {
     id: 'salon-synthetic',
     title: 'SYNTHETIC MINDS : NEURAL FRONTIERS',
+    shortName: 'Synthetic Minds',
     type: 'COGNITIVE AI ROUNDTABLE',
     date: 'SATURDAY, AUG 15, 2026',
     venue: 'RVITM Media Center',
     description: 'Exploring bio-silicon interfaces, cryptographic cognition, and artificial consciousness with leading neuro-technologists.',
     status: 'COMING SOON',
     badge: 'SYMPOSIUM',
-    link: '/passes'
+    link: '/passes',
+    image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1400&auto=format&fit=crop',
+    caption: 'Deep dive into bio-silicon cognition and neuro-cryptography with AI pioneers.',
   },
   {
     id: 'workshop-biophilic',
     title: 'LIVING ARCHITECTURE : DESIGN LAB',
+    shortName: 'Living Architecture',
     type: 'EXPERIMENTAL BIOMATERIALS WORKSHOP',
     date: 'THURSDAY, JUL 02, 2026',
     venue: 'RVITM Design Studio',
     description: 'Hands-on living architecture laboratory prototyping self-healing mycelium structures and microbial urban retrofits.',
     status: 'COMING SOON',
     badge: 'WORKSHOP',
-    link: '/passes'
+    link: '/passes',
+    image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1400&auto=format&fit=crop',
+    caption: 'Prototyping self-healing mycelium structures & bio-responsive material systems.',
   }
 ];
 
@@ -182,7 +197,7 @@ export const SPEAKERS: Speaker[] = [
     fullBio: 'Vikramaditya combines classical philology with high-dimensional embedding spaces. By treating weathered seal impressions as stochastic noise channels, his research team has reconstructed linguistic patterns lost for over 3,800 years. His talk reveals explosive findings on ancient metallurgy and astronomical alignment formulas encoded in Vedic rhythm.',
     keyTakeaway: 'Our deepest historical mysteries are not locked behind ruined stone walls, but behind high-dimensional semantic latent vectors.',
     image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
-    socials: { twitter: 'https://twitter.com' }
+    socials: { linkedin: 'https://linkedin.com', twitter: 'https://twitter.com' }
   },
   {
     id: 'spk-5',
@@ -218,18 +233,18 @@ export const SPEAKERS: Speaker[] = [
 
 export const AGENDA_SESSIONS: AgendaSession[] = [
   {
-    sessionId: 'session-1',
-    sessionTitle: 'SESSION 01 : DECONSTRUCT',
-    timeRange: '09:00 AM — 12:00 PM',
-    theme: 'Shattering the legacy dogmas of intelligence, biology, and compute.',
+    sessionId: 'event-flagship',
+    sessionTitle: 'TEDxRVITM 2026 : UNRAVEL',
+    timeRange: 'SATURDAY, NOV 14, 09:00 AM — 06:30 PM',
+    theme: 'Flagship annual conference: 18 talks, live modular acoustics, delegate labs, and evening banquet.',
     items: [
       {
         id: 'ag-1',
         time: '09:00 AM',
-        title: 'DOORS OPEN & BRUTALIST BADGE CLAIM',
+        title: 'DOORS OPEN & BADGE REGISTRATION',
         type: 'Networking',
         location: 'Atrium Foyer',
-        description: 'Collect your embossed NFC pass, sticker pack, limited screenprint poster, and artisanal filter coffee.'
+        description: 'Collect your embossed pass, sticker pack, limited screenprint poster, and artisanal coffee.'
       },
       {
         id: 'ag-2',
@@ -269,15 +284,7 @@ export const AGENDA_SESSIONS: AgendaSession[] = [
         type: 'Performance',
         location: 'Main Auditorium',
         description: 'Live modular synthesiser performance driven by cosmic ray detector feeds.'
-      }
-    ]
-  },
-  {
-    sessionId: 'session-2',
-    sessionTitle: 'SESSION 02 : IGNITE',
-    timeRange: '01:15 PM — 03:45 PM',
-    theme: 'Re-engineering tangible reality: materials, antiquities, and climate.',
-    items: [
+      },
       {
         id: 'ag-6',
         time: '01:15 PM',
@@ -300,30 +307,14 @@ export const AGENDA_SESSIONS: AgendaSession[] = [
       },
       {
         id: 'ag-8',
-        time: '02:45 PM',
-        title: 'FIRESIDE : THE FUTURE OF ETHICAL HACKING & HARDWARE WARFARE',
-        type: 'Fireside',
-        location: 'Seminar Hall B',
-        description: 'Challenging high-profile silicon security engineers on backdoor kill-switches and open chip fabrication.'
-      },
-      {
-        id: 'ag-9',
         time: '03:15 PM',
-        title: 'IDEA LAB INTERACTION & DELEGATE LAB EXPERIMENTS',
+        title: 'DELEGATE LAB EXPERIMENTS & RESEARCH COMMONS',
         type: 'Interactive',
         location: 'Innovation Courtyard',
         description: 'Hands-on stations featuring VR brain visualizers, mycelium bricks, and open hydrological meters.'
-      }
-    ]
-  },
-  {
-    sessionId: 'session-3',
-    sessionTitle: 'SESSION 03 : SYNTHESIZE',
-    timeRange: '04:15 PM — 06:30 PM',
-    theme: 'Power, commons, and the audacity to build resilient human futures.',
-    items: [
+      },
       {
-        id: 'ag-10',
+        id: 'ag-9',
         time: '04:15 PM',
         title: 'Zero-Dollar Aquifers: Mesh Networks Reviving 40 Lakes',
         speaker: 'Advait Krishna',
@@ -333,28 +324,128 @@ export const AGENDA_SESSIONS: AgendaSession[] = [
         description: 'How decentralized telemetry broke a 20-year drought without waiting for bureaucratic permission.'
       },
       {
-        id: 'ag-11',
-        time: '05:00 PM',
-        title: 'STUDENT CATALYST SPOTLIGHT : UNFILTERED 3-MINUTE REVELATIONS',
-        type: 'Keynote',
-        location: 'Main Auditorium',
-        description: 'The top 3 winners from the RVITM Catalyst idea slam present their radical student initiatives.'
-      },
-      {
-        id: 'ag-12',
+        id: 'ag-10',
         time: '05:40 PM',
-        title: 'CLOSING SYNTHESIS & STANDING COMMITMENT',
+        title: 'CLOSING SYNTHESIS & COMMENCEMENT',
         type: 'Keynote',
         location: 'Main Auditorium',
         description: 'Reflecting on the collective roadmap: from passive audience to relentless idea execution.'
       },
       {
-        id: 'ag-13',
+        id: 'ag-11',
         time: '06:15 PM',
         title: 'SPEAKERS & DELEGATES AFTER-HOURS SOIRÉE',
         type: 'Networking',
         location: 'RVITM Rooftop Garden',
         description: 'High-energy banquet, acoustic sets, speaker one-on-ones, and collaborative project genesis.'
+      }
+    ]
+  },
+  {
+    sessionId: 'event-salon',
+    sessionTitle: 'TEDx SALON : THE QUANTUM LEAP',
+    timeRange: 'FRIDAY, OCT 09, 02:00 PM — 06:00 PM',
+    theme: '100-Seat intimate roundtable examining quantum computing, cryogenic chips, and post-silicon physics.',
+    items: [
+      {
+        id: 'sl-1',
+        time: '02:00 PM',
+        title: 'CHECK-IN & CRYOGENIC LAB TOUR',
+        type: 'Lab Tour',
+        location: 'RVITM Innovation Lab 04',
+        description: 'Walkthrough of sub-zero helium test chambers and semiconductor fabrication microscopes.'
+      },
+      {
+        id: 'sl-2',
+        time: '02:30 PM',
+        title: 'SALON THESIS: PHYSICAL LIMITS OF SILICON COMPUTATION',
+        speaker: 'Hardware Research Fellows',
+        type: 'Prologue',
+        location: 'Roundtable Chamber',
+        description: 'Why Moore’s Law is mathematically dead and what replaces atomic gate electron tunneling.'
+      },
+      {
+        id: 'sl-3',
+        time: '03:15 PM',
+        title: 'KEYNOTE & LIVE DEMO: SOLID-STATE QUBITS AT 4 KELVIN',
+        speaker: 'Vikramaditya Rao',
+        speakerSlug: 'vikramaditya-rao',
+        type: 'Keynote',
+        location: 'Roundtable Chamber',
+        description: 'Live sensor telemetry of coherent quantum states and cryogenic transistor switching.'
+      },
+      {
+        id: 'sl-4',
+        time: '04:15 PM',
+        title: 'CLOSED FIRESIDE: POST-QUANTUM CRYPTOGRAPHY & CHIP WARFARE',
+        type: 'Fireside',
+        location: 'Roundtable Chamber',
+        description: 'Uncensored debate with silicon defense engineers on backdoor kill-switches and open fabrication.'
+      },
+      {
+        id: 'sl-5',
+        time: '05:15 PM',
+        title: 'LAB SOIRÉE & HIGH-PRECISION PROJECT EXCHANGE',
+        type: 'Networking',
+        location: 'Atrium Terrace',
+        description: 'Direct collaboration matching between student researchers, quantum fellows, and venture architects.'
+      }
+    ]
+  },
+  {
+    sessionId: 'event-catalyst',
+    sessionTitle: 'CATALYST : STUDENT IDEA SEARCH',
+    timeRange: 'WEDNESDAY, SEP 23, 04:00 PM — 07:30 PM',
+    theme: 'Open mic & pitch slam: undergraduate wildcards compete for a spot on the official red circle stage.',
+    items: [
+      {
+        id: 'ct-1',
+        time: '04:00 PM',
+        title: 'AMPHITHEATRE DOORS & VOTING PADS DISTRIBUTION',
+        type: 'Registration',
+        location: 'RVITM Amphitheatre',
+        description: 'Collect your digital delegate voting dial to score wildcard pitches in real-time.'
+      },
+      {
+        id: 'ct-2',
+        time: '04:30 PM',
+        title: 'THE RULES OF THE SLAM: 3 MINUTES, NO SLIDES, RAW CONVICTION',
+        speaker: 'Curatorial Jury',
+        type: 'Briefing',
+        location: 'Amphitheatre Stage',
+        description: 'Introducing the strict criteria: originality, evidentiary rigor, and transformative potential.'
+      },
+      {
+        id: 'ct-3',
+        time: '05:00 PM',
+        title: 'PITCH BATCH 01 : DEEP TECH, ROBOTICS & ENERGY',
+        type: 'Pitch Slam',
+        location: 'Amphitheatre Stage',
+        description: '6 student inventors pitch breakthrough hardware prototypes without PR fluff.'
+      },
+      {
+        id: 'ct-4',
+        time: '05:50 PM',
+        title: 'PITCH BATCH 02 : BIO-COMMONS, CULTURE & URBAN DESIGN',
+        type: 'Pitch Slam',
+        location: 'Amphitheatre Stage',
+        description: '6 student researchers present grassroots ecological systems and speculative media.'
+      },
+      {
+        id: 'ct-5',
+        time: '06:40 PM',
+        title: 'LIVE AUDIENCE & JURY VOTE FOR MAIN STAGE SPOT',
+        type: 'Deliberation',
+        location: 'Amphitheatre Stage',
+        description: 'Real-time live telemetry vote tallying to select the official TEDx speaker wildcard.'
+      },
+      {
+        id: 'ct-6',
+        time: '07:10 PM',
+        title: 'WINNER COMMENCEMENT & STUDENT CREATOR MIXER',
+        type: 'Celebration',
+        location: 'Amphitheatre Lawn',
+        description: 'Celebrate the selected wildcard and network with fellow undergraduate builders.'
       }
     ]
   }
@@ -415,16 +506,16 @@ export const WHY_ATTEND_CARDS: WhyAttendCard[] = [
 
 export const TICKETS: TicketTier[] = [
   {
-    id: 'ticket-student',
-    name: 'STUDENT DELEGATE PASS',
-    code: 'STU-2026',
-    price: '₹ 499',
-    originalPrice: '₹ 899',
-    type: 'Student',
+    id: 'ticket-event-1',
+    name: 'EVENT 01: UNRAVEL PASS',
+    code: 'EVT-01',
+    price: '₹ 999',
+    originalPrice: '₹ 1,499',
+    type: 'General',
     status: 'selling_fast',
-    description: 'Subsidized pass for verified college and university students with valid institutional identification.',
+    description: 'Full delegate pass for Annual Flagship Conference UNRAVEL: 18 transformative talks, innovation lounge, and curated lunch.',
     benefits: [
-      'Full Day Access to all 18 Talks',
+      'Full Day Access to all 18 Stage Keynotes',
       'Brutalist Delegate Kit & Lanyard',
       'Official TEDx Certificate of Attendance',
       'Curated Lunch & High-Tea Refreshments',
@@ -435,88 +526,69 @@ export const TICKETS: TicketTier[] = [
     popular: true
   },
   {
-    id: 'ticket-general',
-    name: 'GENERAL ADMISSION',
-    code: 'GEN-2026',
-    price: '₹ 1,199',
-    originalPrice: '₹ 1,599',
+    id: 'ticket-event-2',
+    name: 'EVENT 02: QUANTUM LEAP PASS',
+    code: 'EVT-02',
+    price: '₹ 499',
+    originalPrice: '₹ 799',
     type: 'General',
     status: 'available',
-    description: 'For ambitious professionals, founders, designers, and thinkers who demand front-row intellectual stimulation.',
+    description: 'Intimate 100-seat roundtable symposium examining quantum computing, cryogenic semiconductors, and post-silicon cryptography.',
     benefits: [
-      'Full Day Access to all 18 Talks',
-      'Priority Auditorium Seating Block B',
-      'Premium Brutalist Swag Pack & Screenprint Poster',
-      'Gourmet Networking Lunch & Artisan Coffee Bar',
-      'Access to Salon Breakout Sessions',
-      'Exclusive Directory of Fellow Delegates'
+      'Reserved Roundtable Seating (Lab 04)',
+      'Frontier Hardware Architecture Dossier',
+      'Interactive Live Cryogenic Lab Demo',
+      'Networking with Deep Tech Founders',
+      'Certificate of Salon Participation'
     ],
     barcode: '|||||| || |||| ||||| || |||||'
   },
   {
-    id: 'ticket-vip',
-    name: 'PATRON / VIP DELEGATE',
-    code: 'VIP-2026',
-    price: '₹ 2,999',
-    type: 'VIP',
+    id: 'ticket-event-3',
+    name: 'EVENT 03: CATALYST PASS',
+    code: 'EVT-03',
+    price: '₹ 299',
+    originalPrice: '₹ 499',
+    type: 'Student',
     status: 'available',
-    description: 'Elevated experience with exclusive speaker lounge access and direct private dinner invitations.',
+    description: 'Open mic pitch slam pass: undergraduate wildcards competing for an official speaking slot on the red circle stage.',
     benefits: [
-      'Front Row Reserved VIP Tier Seating',
-      'Exclusive Invite to Speaker After-Hours Soirée',
-      'Hardcover Limited Edition TEDx Bookazine',
-      'Fast-Track VIP Registration Desk',
-      'Private 1-on-1 Q&A Access in Speaker Green Room',
-      'Annual TEDxRVITM Patron Recognition in Credits'
+      'Amphitheatre Priority Seating',
+      'Audience Voting Keypad Access',
+      'Networking with Student Innovators',
+      'Refreshment & Beverage Voucher'
     ],
     barcode: '|| |||||| |||| || |||||| ||||'
   },
   {
-    id: 'ticket-corporate',
-    name: 'GROUP / LAB PASS (5+)',
-    code: 'GRP-2026',
-    price: '₹ 3,999',
-    originalPrice: '₹ 5,995',
-    type: 'Group',
+    id: 'ticket-all-access',
+    name: 'ALL-ACCESS SEASON PASS',
+    code: 'SEASON-PASS',
+    price: '₹ 1,999',
+    originalPrice: '₹ 2,795',
+    type: 'VIP',
     status: 'available',
-    description: 'Bundle passes for university research teams, startup founder cohorts, or enterprise innovation units.',
+    description: 'Comprehensive season pass providing guaranteed delegate entry to all 5 flagship conferences, salons, and design labs.',
     benefits: [
-      '5 x Full Access Delegate Passes',
-      'Dedicated Cohort Reserved Seating Row',
-      'Company / Lab Shoutout in Delegate Guide',
-      'Curated Team Networking Session',
-      'Discounted Passes for Future Salons'
+      'Guaranteed Entry to All 5 Events & Salons',
+      'VIP Front-Row Seating at Flagship',
+      'Speaker Green Room & Soirée Pass',
+      'Hardcover Limited Edition Bookazine',
+      'Annual TEDxRVITM Patron Recognition'
     ],
     barcode: '|||| |||||| || |||| |||| ||||'
-  },
-  {
-    id: 'ticket-scholarship',
-    name: 'NEED-BASED SCHOLARSHIP',
-    code: 'SCH-2026',
-    price: '₹ 0',
-    type: 'Scholarship',
-    status: 'application_based',
-    description: 'Full 100% financial waiver awarded to 50 exceptional grassroot builders, rural researchers, and activists.',
-    benefits: [
-      '100% Waived Ticket & Swag Kit',
-      'Travel Grant Assistance (Applicable)',
-      '1-on-1 Mentorship from an Invited Speaker',
-      'Featured in the Community Spotlight Showcase'
-    ],
-    barcode: '||| |||| |||||| |||| || |||||'
   }
 ];
 
 export const COMPARISON_BENEFITS = [
-  { benefit: 'Access to All 18 Stage Talks', student: true, general: true, vip: true, group: true, scholarship: true },
-  { benefit: 'Curated Lunch & High Tea', student: true, general: true, vip: true, group: true, scholarship: true },
-  { benefit: 'Brutalist Delegate Kit & Stickers', student: true, general: true, vip: true, group: true, scholarship: true },
-  { benefit: 'Auditorium Seating Tier', student: 'Standard', general: 'Priority B', vip: 'Front Row A', group: 'Reserved Block', scholarship: 'Standard' },
-  { benefit: 'Limited Screenprint Poster', student: false, general: true, vip: true, group: true, scholarship: false },
-  { benefit: 'Access to Innovation Lab Demos', student: true, general: true, vip: true, group: true, scholarship: true },
-  { benefit: 'Speaker Green Room & Soirée Pass', student: false, general: false, vip: true, group: false, scholarship: false },
-  { benefit: 'Hardcover Event Bookazine', student: false, general: false, vip: true, group: false, scholarship: false },
-  { benefit: '1-on-1 Speaker Mentorship Match', student: false, general: false, vip: true, group: false, scholarship: true },
+  { benefit: '18 Flagship Conference Talks', event1: true, event2: false, event3: false, allAccess: true },
+  { benefit: 'Quantum Roundtable & Lab Demo', event1: false, event2: true, event3: false, allAccess: true },
+  { benefit: 'Catalyst Pitch Voting Keypad', event1: false, event2: false, event3: true, allAccess: true },
+  { benefit: 'Curated Lunch & High Tea', event1: true, event2: true, event3: true, allAccess: true },
+  { benefit: 'Official Delegate Swag & Poster', event1: true, event2: true, event3: false, allAccess: true },
+  { benefit: 'Innovation Lab Sandbox Entry', event1: true, event2: true, event3: false, allAccess: true },
+  { benefit: 'Speaker Green Room & VIP Dinner', event1: false, event2: false, event3: false, allAccess: true },
+  { benefit: 'All 5 Conferences & Salons Access', event1: false, event2: false, event3: false, allAccess: true },
 ];
 
 export const TESTIMONIALS: Testimonial[] = [
@@ -555,12 +627,12 @@ export const TESTIMONIALS: Testimonial[] = [
 ];
 
 export const PAST_SPEAKERS: PastSpeaker[] = [
-  { id: 'ps-1', name: 'Dr. Ramesh Sundaram', edition: '2025 // VELOCITY', talk: 'Hyperloop Dynamics & Atmospheric Drag', image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80', category: 'Deep Tech', views: '480K' },
-  { id: 'ps-2', name: 'Ananya Deshpande', edition: '2025 // VELOCITY', talk: 'The Geometry of Radical Empathy', image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80', category: 'Culture', views: '890K' },
-  { id: 'ps-3', name: 'Kabir Vohra', edition: '2024 // LIMINAL', talk: 'Why Smart Cities Make Dumb Humans', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80', category: 'Urbanism', views: '1.2M' },
-  { id: 'ps-4', name: 'Dr. Shalini Mukerji', edition: '2024 // LIMINAL', talk: 'CRISPR in your Kitchen: DIY Biology', image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=400&q=80', category: 'Genetics', views: '730K' },
-  { id: 'ps-5', name: 'Pranav Roy', edition: '2023 // GENESIS', talk: 'Algorithmic Music & Mathematical Grief', image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80', category: 'Art & Tech', views: '610K' },
-  { id: 'ps-6', name: 'Meera Nambiar', edition: '2023 // GENESIS', talk: 'Dark Skies: Reclaiming Night in Megacities', image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80', category: 'Ecology', views: '950K' },
+  { id: 'ps-1', name: 'Dr. Ramesh Sundaram', edition: '2025 — VELOCITY', talk: 'Hyperloop Dynamics & Atmospheric Drag', image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80', category: 'Deep Tech', views: '480K' },
+  { id: 'ps-2', name: 'Ananya Deshpande', edition: '2025 — VELOCITY', talk: 'The Geometry of Radical Empathy', image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80', category: 'Culture', views: '890K' },
+  { id: 'ps-3', name: 'Kabir Vohra', edition: '2024 — LIMINAL', talk: 'Why Smart Cities Make Dumb Humans', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80', category: 'Urbanism', views: '1.2M' },
+  { id: 'ps-4', name: 'Dr. Shalini Mukerji', edition: '2024 — LIMINAL', talk: 'CRISPR in your Kitchen: DIY Biology', image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=400&q=80', category: 'Genetics', views: '730K' },
+  { id: 'ps-5', name: 'Pranav Roy', edition: '2023 — GENESIS', talk: 'Algorithmic Music & Mathematical Grief', image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80', category: 'Art & Tech', views: '610K' },
+  { id: 'ps-6', name: 'Meera Nambiar', edition: '2023 — GENESIS', talk: 'Dark Skies: Reclaiming Night in Megacities', image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80', category: 'Ecology', views: '950K' },
 ];
 
 export const SPONSORS: Sponsor[] = [
@@ -584,7 +656,7 @@ export const VENUE_DETAILS = {
   capacity: '600 Tiered Acoustic Seats with Meyer Sound Array',
   coordinates: '12.8718° N, 77.5855° E',
   mapEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.3138402431707!2d77.58309197592966!3d12.887532387420237!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae15617a2ec3cf%3A0xb35a09ce7d61c360!2sRV%20Institute%20of%20Technology%20and%20Management!5e0!3m2!1sen!2sin!4v1710000000000!5m2!1sen!2sin',
-  googleMapsDirectionsUrl: 'https://maps.app.goo.gl/9Qd4yGZZf7xRv4Tz7',
+  googleMapsDirectionsUrl: 'https://maps.app.goo.gl/pKNpiJanEnf41bJ66',
   images: [
     'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1000&q=80',
     'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1000&q=80',
@@ -607,7 +679,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     id: 'team-1',
     name: 'Nikhil R. Gowda',
     role: 'Lead Organizer & Licensee',
-    dept: 'Final Year CSE // Systems Architecture',
+    dept: 'Final Year CSE — Systems Architecture',
     quote: '"Ideas are weightless until someone risks their reputation to stage them."',
     image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
     color: '#D6F23A',
@@ -617,7 +689,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     id: 'team-2',
     name: 'Sanjana Krishnamurthy',
     role: 'Head of Curation & Content',
-    dept: 'Third Year ISE // Cognitive Systems',
+    dept: 'Third Year ISE — Cognitive Systems',
     quote: '"We read 420 talk proposals to find the 6 that gave us actual goosebumps."',
     image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80',
     color: '#FF5CC8',
@@ -627,7 +699,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     id: 'team-3',
     name: 'Harshith Varma',
     role: 'Art Director & Visual Identity',
-    dept: 'Fourth Year Mech // Computational Aesthetics',
+    dept: 'Fourth Year Mech — Computational Aesthetics',
     quote: '"If the typography doesn\'t intimidate you slightly, it\'s not brutalist enough."',
     image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
     color: '#5B2EFF',
@@ -637,7 +709,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     id: 'team-4',
     name: 'Ananya S. Rao',
     role: 'Experience & Stagecraft Lead',
-    dept: 'Third Year ECE // Psychoacoustics',
+    dept: 'Third Year ECE — Psychoacoustics',
     quote: '"Every second a delegate spends in the hall is an orchestrated electrical circuit."',
     image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
     color: '#FF7A00',
@@ -657,7 +729,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     id: 'team-6',
     name: 'Shreya Sundar',
     role: 'Partnerships & Patron Relations',
-    dept: 'Third Year CSE // Venture Scout',
+    dept: 'Third Year CSE — Venture Scout',
     quote: '"We partner only with companies whose technology our speakers would actually dissect."',
     image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80',
     color: '#FF5CC8',
@@ -718,10 +790,12 @@ export const FAQ_ITEMS: FAQItem[] = [
 ];
 
 export const NAV_LINKS = [
-  { name: 'Speakers', href: '#speakers', path: '/speakers' },
+  { name: 'About', href: '#about', path: '/#about' },
+  { name: 'Events', href: '#events', path: '/#events' },
+  { name: 'Speakers', href: '#speakers', path: '/#speakers' },
   { name: 'Schedule', href: '#schedule', path: '/#schedule' },
-  { name: 'About', href: '#about', path: '/about' },
   { name: 'Venue', href: '#venue', path: '/#venue' },
-  { name: 'Team', href: '#team', path: '/team' },
-  { name: 'FAQ', href: '#faq', path: '/faq' },
+  { name: 'Team', href: '#team', path: '/#team' },
+  { name: 'FAQ', href: '#faq', path: '/#faq' },
+  { name: 'Contact', href: '#contact', path: '/#contact' },
 ];

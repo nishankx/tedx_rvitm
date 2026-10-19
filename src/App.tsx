@@ -1,38 +1,51 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { AnimatePresence, motion, useScroll, type MotionValue } from 'framer-motion';
 
 // Hooks & Globals
 import { useLenis } from './hooks/useLenis';
 import { ScrollProgress } from './components/layout/ScrollProgress';
 import { FilmGrain } from './components/layout/FilmGrain';
 import { Navbar } from './components/layout/Navbar';
-import { ClickSpark } from './components/animations/ClickSpark';
 
 // Pages
 import { HomePage } from './pages/HomePage';
 import { SpeakersPage } from './pages/SpeakersPage';
 import { SpeakerDetailPage } from './pages/SpeakerDetailPage';
-import { PassesPage } from './pages/PassesPage';
 import { AboutPage } from './pages/AboutPage';
 import { PartnerPage } from './pages/PartnerPage';
 import { TeamPage } from './pages/TeamPage';
 import { FaqPage } from './pages/FaqPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
-// Scroll to top on route change
+// Scroll to top or anchor on route change
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
   React.useEffect(() => {
+    if (hash) {
+      const targetId = hash.replace('#', '');
+      const element = document.getElementById(targetId);
+      if (element) {
+        const timeout = setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 120);
+        return () => clearTimeout(timeout);
+      }
+    }
     window.scrollTo(0, 0);
-  }, [pathname]);
+  }, [pathname, hash]);
 
   return null;
 }
 
 // Page transition wrapper with brutalist black/red shutters wipe
-const AnimatedRoutes: React.FC = () => {
+interface AnimatedRoutesProps {
+  scrollY?: MotionValue<number>;
+  scrollYProgress?: MotionValue<number>;
+}
+
+const AnimatedRoutes: React.FC<AnimatedRoutesProps> = ({ scrollY, scrollYProgress }) => {
   const location = useLocation();
 
   return (
@@ -42,7 +55,7 @@ const AnimatedRoutes: React.FC = () => {
           path="/"
           element={
             <PageWrapper>
-              <HomePage />
+              <HomePage scrollY={scrollY} scrollYProgress={scrollYProgress} />
             </PageWrapper>
           }
         />
@@ -64,11 +77,7 @@ const AnimatedRoutes: React.FC = () => {
         />
         <Route
           path="/passes"
-          element={
-            <PageWrapper>
-              <PassesPage />
-            </PageWrapper>
-          }
+          element={<Navigate to="/" replace />}
         />
         <Route
           path="/about"
@@ -134,14 +143,14 @@ export function App() {
   // Initialize Lenis smooth scroll
   useLenis();
 
+  // Global Framer Motion scroll tracker
+  const { scrollY, scrollYProgress } = useScroll();
+
   return (
     <BrowserRouter>
       <ScrollToTop />
 
       <div className="min-h-screen bg-[#080808] text-white selection:bg-[#E62B1E] selection:text-white overflow-x-hidden">
-        {/* ReactBits ClickSpark effect */}
-        <ClickSpark sparkColor="#E62B1E" sparkCount={8} />
-
         {/* Global Film Grain */}
         <FilmGrain />
 
@@ -151,8 +160,8 @@ export function App() {
         {/* Sleek Navbar */}
         <Navbar />
 
-        {/* Routes */}
-        <AnimatedRoutes />
+        {/* Routes with scroll tracking props */}
+        <AnimatedRoutes scrollY={scrollY} scrollYProgress={scrollYProgress} />
       </div>
     </BrowserRouter>
   );
